@@ -1,18 +1,18 @@
 close all;
 clear all;
 
-img01 = im2double(rgb2gray(imread('mediciones\haz_310mm.jpg')));
+img01 = im2double(rgb2gray(imread('mediciones\haz_angosto_300mm.jpg')));
 
 figure(1);
 imshow(img01);
-%axis('tic', 'label');
+axis on;
 img01=img01'%Transpongo la matriz
 [columns_img01 rows_img01]=size(img01)
 
 %busco por filas las que estan por arriba de un umbral y les calculo el ancho, luego busco la mas ancha
 for i = 1:columns_img01
-    y_umbrales01 = find(img01(i,:) > 0.6);%%Valor para tocar
-    if (length(y_umbrales01) >= 0.7) %%Valor para tocar
+    y_umbrales01 = find(img01(i,:) > 0.55);%%Valor para tocar N1
+    if (length(y_umbrales01) >= 0.7) %%Valor para tocar N2
         ancho01(i,1) = y_umbrales01(end) - y_umbrales01(1);
     else
         ancho01(i,1) = 0;
@@ -25,7 +25,7 @@ hold on;
 imshow(gray2ind(img01'), jet());
 hold on;
 plot( (x_max_ancho01*ones(1,rows_img01))',(1:rows_img01)', '-k', 'linewidth', 2);
-%axis('tic', 'label');0
+axis on;
 xlabel('x / px');
 ylabel('y / px');
 
@@ -33,7 +33,7 @@ med_max_y01 = img01(x_max_ancho01, :);
 y01 = 0:(rows_img01-1);
 
 %busco el valor central de la medicion y corro el eje x
-y_umbr01 = find(med_max_y01 > 0.15);%%Valor para tocar
+y_umbr01 = find(med_max_y01 > 0.25);%%Valor para tocar N3
 y_cent01 = floor((y_umbr01(1) + y_umbr01(end))/2);
 y01 = y01 - y_cent01;
 
@@ -47,5 +47,5 @@ grid on;
 xlabel('x / px');
 ylabel('I');
 label_ajustes = sprintf('Ajustes w = %.2f px I_0 = %.3f', parametros01(1), parametros01(2));
-legend('MediciÃ³n', label_ajustes, 'location', 'northwest');
+legend('Medición', label_ajustes, 'location', 'northwest');
 legend('boxoff');
