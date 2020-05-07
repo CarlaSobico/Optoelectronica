@@ -20,14 +20,15 @@ for i = 1:columns_img01
 end
 [~, x_max_ancho01] = max(ancho01);
 
-figure(2);
-hold on;
-imshow(gray2ind(img01'), jet());
-hold on;
-plot( (x_max_ancho01*ones(1,rows_img01))',(1:rows_img01)', '-k', 'linewidth', 2);
+Hf = figure(2);
+set(Hf,'PaperPosition',[0 0 30 8]); %Defino el tama?o del grafico que va
+imshow(gray2ind(img01), jet());
+line(1:columns_img01, x_max_ancho01*ones(1,columns_img01), 'LineWidth', 2, 'Color', 'k');
+%edito los ejes
 axis on;
-xlabel('x / px');
-ylabel('y / px');
+set(gca(),'XLim',[1 rows_img01],'YLim',[1 columns_img01],'Box','on','FontName','Arial','FontSize',8,'GridLineStyle','--','LineWidth',0.4,'TickDir','in');
+xlabel('x / px','FontName','Arial','FontSize',20);
+ylabel('y / px','FontName','Arial','FontSize',20)
 
 med_max_y01 = img01(x_max_ancho01, :);
 y01 = 0:(rows_img01-1);
