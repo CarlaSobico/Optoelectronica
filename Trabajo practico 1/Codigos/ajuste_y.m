@@ -1,17 +1,18 @@
 close all;
 clear all;
 
-img01 = im2double(rgb2gray(imread('mediciones\haz_angosto_300mm.jpg')));
+img01 = im2double(rgb2gray(imread('mediciones\haz_300mm.jpg')));
 
 figure(1);
 imshow(img01);
 axis on;
 img01=img01'%Transpongo la matriz
 [columns_img01 rows_img01]=size(img01)
+set(gca,'XLim',[1 columns_img01],'YLim',[1 rows_img01])
 
 %busco por filas las que estan por arriba de un umbral y les calculo el ancho, luego busco la mas ancha
 for i = 1:columns_img01
-    y_umbrales01 = find(img01(i,:) > 0.55);%%Valor para tocar N1
+    y_umbrales01 = find(img01(i,:) > 0.5);%%Valor para tocar N1
     if (length(y_umbrales01) >= 0.7) %%Valor para tocar N2
         ancho01(i,1) = y_umbrales01(end) - y_umbrales01(1);
     else
@@ -20,15 +21,16 @@ for i = 1:columns_img01
 end
 [~, x_max_ancho01] = max(ancho01);
 
-Hf = figure(2);
-set(Hf,'PaperPosition',[0 0 30 8]); %Defino el tama?o del grafico que va
-imshow(gray2ind(img01), jet());
-line(1:columns_img01, x_max_ancho01*ones(1,columns_img01), 'LineWidth', 2, 'Color', 'k');
-%edito los ejes
+figure(2);
+hold on;
+imshow(gray2ind(img01'), jet());
+hold on;
+%plot( (x_max_ancho01*ones(1,rows_img01))',(1:rows_img01)', '-k', 'linewidth', 2);
+line((x_max_ancho01*ones(1,rows_img01))',(1:rows_img01)', 'LineWidth', 2, 'Color', 'k');
 axis on;
-set(gca(),'XLim',[1 rows_img01],'YLim',[1 columns_img01],'Box','on','FontName','Arial','FontSize',8,'GridLineStyle','--','LineWidth',0.4,'TickDir','in');
-xlabel('x / px','FontName','Arial','FontSize',20);
-ylabel('y / px','FontName','Arial','FontSize',20)
+set(gca,'XLim',[1 columns_img01],'YLim',[1 rows_img01])
+xlabel('x / px');
+ylabel('y / px');
 
 med_max_y01 = img01(x_max_ancho01, :);
 y01 = 0:(rows_img01-1);
