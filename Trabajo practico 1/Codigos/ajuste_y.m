@@ -13,32 +13,31 @@ xlabel('x / px','FontName','Arial','FontSize',15);
 ylabel('y / px','FontName','Arial','FontSize',15);
 print(nombre_fig1,'-dpng');
 
-img01=img01';%Transpongo la matriz;
-[columns_img01,rows_img01]=size(img01);
-set(gca,'XLim',[1 columns_img01],'YLim',[1 rows_img01])
+img01T=img01';%Transpongo la matriz;
+[columns_img01T,rows_img01T]=size(img01T);
+set(gca,'XLim',[1 columns_img01T],'YLim',[1 rows_img01T])
 
-%busco por filas las que estan por arriba de un umbral y les calculo el ancho, luego busco la mas ancha
-for i = 1:columns_img01
-    y_umbrales01 = find(img01(i,:) > N1);%%Valor para tocar N1
+for i = 1:columns_img01T
+    y_umbrales01 = find(img01T(i,:) > N1);%%Valor para tocar N1
     if (length(y_umbrales01) >= N2) %%Valor para tocar N2
-        ancho01(i,1) = y_umbrales01(end) - y_umbrales01(1);
+        ancho01T(i,1) = y_umbrales01(end) - y_umbrales01(1);
     else
-        ancho01(i,1) = 0;
+        ancho01T(i,1) = 0;
     end
 end
-[~, x_max_ancho01] = max(ancho01);
+[~, x_max_ancho01] = max(ancho01T);
 
-figure(5);
-hold on;
-imshow(gray2ind(img01'), jet());
-hold on;
-%plot( (x_max_ancho01*ones(1,rows_img01))',(1:rows_img01)', '-k', 'linewidth', 2);
-line((x_max_ancho01*ones(1,rows_img01))',(1:rows_img01)', 'LineWidth', 2, 'Color', 'k');
-axis on;
-set(gca,'XLim',[1 columns_img01],'YLim',[1 rows_img01])
-xlabel('x / px','FontName','Arial','FontSize',15);
-ylabel('y / px','FontName','Arial','FontSize',15);
-print(nombre_fig2,'-dpng');
+% figure(5);
+% hold on;
+% imshow(gray2ind(img01'), jet());
+% hold on;
+% %plot( (x_max_ancho01*ones(1,rows_img01))',(1:rows_img01)', '-k', 'linewidth', 2);
+% line((x_max_ancho01*ones(1,rows_img01))',(1:rows_img01)', 'LineWidth', 2, 'Color', 'k');
+% axis on;
+% set(gca,'XLim',[1 columns_img01],'YLim',[1 rows_img01])
+% xlabel('x / px','FontName','Arial','FontSize',15);
+% ylabel('y / px','FontName','Arial','FontSize',15);
+% print(nombre_fig2,'-dpng');
 
 med_max_y01 = img01(x_max_ancho01, :);
 y01 = 0:(rows_img01-1);
