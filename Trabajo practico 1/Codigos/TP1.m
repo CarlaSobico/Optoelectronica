@@ -39,4 +39,4 @@ Hleg=legend('H=1mm - Foco_{L1}:200mm - Foco_{L2}:-30mm','H=1mm - Foco_{L1}:-30mm
 legend('boxon');
 set(Hleg,'location','northwest','FontName','Arial','FontSize',7.5);
 
-print('caminoRayos.png','-dpng');
+%print('caminoRayos.png','-dpng');
